@@ -1,0 +1,9 @@
+/vendor
+/node_modules
+.env
+/.idea
+config/database.php
+config/mail.php
+.env.example
+public/uploads
+public/CCAVenueWorldIntegrationManual.pdf
