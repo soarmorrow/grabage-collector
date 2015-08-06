@@ -17,13 +17,42 @@ Route::get('/', 'WelcomeController@index');
 
 Route::get('home', ['as'=>'home','uses'=>'HomeController@index']);
 
+Route::model('user','App\User');
+Route::model('order','App\Order');
+Route::model('status','App\Status');
+Route::model('type','App\Type   ');
+
 /**
  * Admin routes
  */
 
-Route::group(['prefix'=>'admin','namespace'=>'Admin', 'middleware'=>['admin','auth']], function(){
+Route::group(['prefix'=>'admin','namespace'=>'Admin', 'middleware'=>['admin']], function(){
+
+    Route::get('/', ['as'=>'dashboard', 'uses'=>'DashboardController@index']);
+    Route::resource('settings', 'SettingsController', ['only' => ['index', 'store'], 'names' => ['index'=>'settings','store'=>'settings.store']]);
+
+    Route::get('status', ['as'=>'status', 'uses'=>'StatusController@index']);
+    Route::post('status', ['as'=>'status', 'uses'=>'StatusController@create']);
+    Route::post('status/edit', ['as'=>'edit-status', 'uses'=>'StatusController@edit']);
+    Route::get('status/{status}/delete', ['as'=>'delete-status', 'uses'=>'StatusController@destroy']);
+
+    Route::get('types', ['as'=>'types', 'uses'=>'TypesController@index']);
+    Route::post('types', ['as'=>'types', 'uses'=>'TypesController@create']);
+    Route::post('type/edit', ['as'=>'edit-type', 'uses'=>'TypesController@edit']);
+    Route::get('type/{type}/delete', ['as'=>'delete-type', 'uses'=>'TypesController@destroy']);
+
     Route::group(['prefix'=>'users'], function(){
-       Route::get('/', ['as'=>'users', 'uses'=>'UsersController@index']);
+        Route::get('/', ['as'=>'users', 'uses'=>'UsersController@index']);
+        Route::any('/add', ['uses'=>'UsersController@create']);
+        Route::any('{user}/edit', ['as'=>'edit-user','uses'=>'UsersController@edit']);
+        Route::get('{user}/delete', ['as'=>'delete-user','uses'=>'UsersController@destroy']);
+    });
+    Route::group(['prefix'=>'orders'], function(){
+        Route::get('/', ['as'=>'orders', 'uses'=>'OrderController@index']);
+        Route::any('/add', ['uses'=>'OrderController@create']);
+        Route::any('{order}/edit', ['as'=>'edit-order','uses'=>'OrderController@edit']);
+        Route::any('{order}/view', ['as'=>'view-order','uses'=>'OrderController@show']);
+        Route::get('{order}/delete', ['as'=>'delete-order','uses'=>'OrderController@destroy']);
     });
 });
 
@@ -40,8 +69,6 @@ Route::group(['prefix'=>'image'], function(){
  * Order routes with route-Order model binding
  */
 
-Route::model('order','App\Order');
-
 Route::group(['prefix' => 'order','namespace'=>'Orders'], function()
 {
     // Controllers Within The "App\Http\Controllers\Orders" Namespace
@@ -55,7 +82,6 @@ Route::group(['prefix' => 'order','namespace'=>'Orders'], function()
 /**
  * Account Routes
  */
-Route::model('user','App\User');
 
 Route::group(['prefix'=>'account','namespace'=>'Account'], function(){
 

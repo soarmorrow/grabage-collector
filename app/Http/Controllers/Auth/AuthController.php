@@ -71,7 +71,6 @@ class AuthController extends Controller
     public function postRegister(RegisterRequest $request){
 
         $validator = $this->registrar->validator($request->all());
-
         if ($validator->fails())
         {
             $this->throwValidationException(

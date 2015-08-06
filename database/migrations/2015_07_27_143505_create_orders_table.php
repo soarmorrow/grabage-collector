@@ -23,13 +23,13 @@ class CreateOrdersTable extends Migration {
             $table->text('address');
             $table->string('city',35);
             $table->string('state',35);
-            $table->integer('postcode');
+            $table->integer('postcode')->default(0);
             $table->string('phone',20);
             $table->float('quantity');
             $table->float('amount',10);
             $table->string('transaction_id',60);
             $table->string('payment_type',60);
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('status')->default(1);
 			$table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

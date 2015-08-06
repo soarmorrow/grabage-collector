@@ -18,11 +18,20 @@ class DatabaseSeeder extends Seeder
         $this->call('UserTableSeeder');
         $this->command->info('User table seeded successfully');
 
+        $this->call('OptionTableSeeder');
+        $this->command->info('Options table seeded successfully');
+
         $this->call('RoleTableSeeder');
         $this->command->info('Role table seeded successfully');
 
         $this->call('UserRoleTableSeeder');
         $this->command->info('User Role table seeded successfully');
+
+        $this->call('StatusTableSeeder');
+        $this->command->info('Status table seeded successfully');
+
+        $this->call('GarbageTypeTableSeeder');
+        $this->command->info('Garbage Type table seeded successfully');
 
     }
 

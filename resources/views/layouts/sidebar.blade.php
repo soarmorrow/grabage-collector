@@ -18,6 +18,9 @@
         </div>
     </header>
     <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+        @if(Auth::user()->roles()->first()->role_id == 1)
+            <a class="mdl-navigation__link" href="{{url('admin')}}"><i class="mdl-color-text--blue-grey-400 material-icons">dashboard</i>Admin</a>
+        @endif
         <a class="mdl-navigation__link" href="{{route('home')}}"><i class="mdl-color-text--blue-grey-400 material-icons">home</i>Home</a>
         <a class="mdl-navigation__link" href="{{url('order/list')}}"><i class="mdl-color-text--blue-grey-400 material-icons">assignment</i>Order</a>
         {{--<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons">delete</i>Trash</a>--}}

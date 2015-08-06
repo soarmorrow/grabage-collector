@@ -5,6 +5,7 @@
 @endsection
 
 @section('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css"/>
     <link rel="stylesheet" href="{{asset('plugins/dropzone/dropzone.css')}}"/>
     <link rel="stylesheet" href="{{asset('css/paper-collapse.css')}}"/>
 @endsection
@@ -137,6 +138,11 @@
                                         <label class="mdl-textfield__label" for="amount">Total Amount</label>
                                     </div>
 
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                                        {!! Form::select('types[]', \App\GarbageType::lists('name','id'),3, ['class'=>'mdl-textfield__input chosen-select','multiple'=>true,'data-placeholder'=>'Select Type']) !!}
+                                        <label class="mdl-textfield__label" for="type">Garbage Type</label>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -170,8 +176,9 @@
     <script src="{{asset('js/plugins/jquery.geocomplete.min.js')}}"></script>
     <script src="{{asset('js/plugins/jquery.maskedinput.min.js')}}"></script>
     <script src="{{asset('plugins/dropzone/dropzone.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
     <script>
-        var rate = 23;
+        var rate = {{get_option('rate')}};
         $(function () {
 
             window.files = {};
@@ -212,7 +219,11 @@
                     return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
                 }
             });
+
+            // mask input
             $("input[name='phone']").mask("(999) 999-9999");
+
+            // Paper collapse
             $('.collapse-card').paperCollapse();
             $location = $(".location");
             $quantity = $(".quantity");
@@ -236,7 +247,7 @@
 
             $(document).on('keyup',"input[name='quantity']", function(){
                 console.log($quantity.val());
-               $("input[name='amount']").val(parseFloat($(this).val()) * rate);
+               $("input[name='amount']").val(Math.round((parseFloat($(this).val()) * rate)*100)/100);
             });
 
             $location.find('.collapse-card__title').on('click', function () {
@@ -262,6 +273,9 @@
                     $selector.find('.collapse-card__title').trigger('click');
                 }
             };
+
+            // chosen
+            $("select[name='types[]']").chosen({width: "inherit"});
 
             // set my address
             $(document).on('click','.my_address', function(){
@@ -334,7 +348,7 @@
                             console.log('Geocoder failed due to: ' + status);
                         }
                     }
-            );
+            )
         }
 
     </script>

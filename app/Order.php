@@ -15,6 +15,16 @@ class Order extends Model {
         return $this->belongsTo('App\User');
     }
 
+    public function types()
+    {
+        return $this->hasMany('App\OrderGarbageType');
+    }
+
+    public function status()
+    {
+        return $this->hasOne('App\Status');
+    }
+
     public function delete()
     {
         $this->attachments()->delete();
