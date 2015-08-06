@@ -53,7 +53,7 @@
                 <div class="mdl-cell mdl-cell--12-col">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
                                         <textarea required class="mdl-textfield__input" type="text"
-                                                  name="address">{{!empty(Auth::user()->Address)?Auth::user()->Address:""}}"</textarea>
+                                                  name="address">{{!empty(Auth::user()->address)?Auth::user()->address:""}}</textarea>
                         <label class="mdl-textfield__label" for="address">Address</label>
                     </div>
                 </div>
@@ -146,18 +146,18 @@
                                     }
                                     var address = results[0].address_components;
                                     for (var i = 0; i < address.length; i++) {
-                                        if (jQuery.inArray("postal_code", address[i].types) != -1) {
+                                        if (jQuery.inArray("postal_code", address[i].types) != -1 && {{!empty(Auth::user()->postcode) ? 'false':'true'}}) {
                                             $('input[name="postcode"]').val(address[i].long_name)
                                         }
-                                        else if (jQuery.inArray("administrative_area_level_1", address[i].types) != -1) {
+                                        else if (jQuery.inArray("administrative_area_level_1", address[i].types) != -1 && {{!empty(Auth::user()->state)?'false':'true'}}) {
                                             $('input[name="state"]').val(address[i].long_name)
                                         }
-                                        else if (jQuery.inArray("locality", address[i].types) != -1) {
+                                        else if (jQuery.inArray("locality", address[i].types) != -1 && {{!empty(Auth::user()->address)?'false':'true'}}) {
                                             $('textarea[name="address"]').val(address[i].long_name)
                                         }
-                                        else if (jQuery.inArray("administrative_area_level_2", address[i].types) != -1) {
+                                        else if (jQuery.inArray("administrative_area_level_2", address[i].types) != -1 && {{!empty(Auth::user()->city)?'false':'true'}}) {
                                             $('input[name="city"]').val(address[i].long_name)
-                                        } else if (jQuery.inArray("sublocality_level_1", address[i].types) != -1) {
+                                        } else if (jQuery.inArray("sublocality_level_1", address[i].types) != -1 && {{!empty(Auth::user()->address)?'false':'true'}}) {
                                             var input_address = $('textarea[name="address"]');
                                             input_address.val(input_address.val() + " - " + address[i].long_name);
                                         }

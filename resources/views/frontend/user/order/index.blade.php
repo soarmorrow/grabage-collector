@@ -1,15 +1,13 @@
 @extends('layouts.default')
 
 @section('title')
-Order History
+    Order History
 @endsection
 
 
 @section('content')
-
-<div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--12-col mdl-animation--default">
-
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col mdl-animation--default">
             <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--middle">
                 <thead>
                 <tr>
@@ -24,34 +22,37 @@ Order History
                 <tbody>
 
                 @forelse($orders as $order)
-                <tr>
-                    <td class="mdl-data-table__cell--non-numeric">
-                        {{nl2br($order->address)}}<br/>
-                        {{$order->city}}, {{$order->state}} - {{$order->postcode}}<br/>
-                        Phone : {{$order->phone}}
-                    </td>
-                    <td>
-                        <code>{{$order->quantity}}</code> * <code>5</code> = <code>${{$order->amount}}</code>
-                    </td>
-                    <td>
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            {{nl2br($order->address)}}<br/>
+                            {{$order->city}}, {{$order->state}} - {{$order->postcode}}<br/>
+                            Phone : {{$order->phone}}
+                        </td>
+                        <td>
+                            <code>{{$order->quantity}}</code> * <code>{{get_option('rate')}}</code> =
+                            <code>${{$order->amount}}</code>
+                        </td>
+                        <td>
+                            <label class="{{\Illuminate\Support\Facades\Config::get('status.'.$order->status)}}">{{\App\Status::lists('name','id')[$order->status]}}</label>
+                        </td>
+                        <td>
 
-                        Pending
-                    </td>
-                    <td>
-
-                        <strong>{{$order->created_at->diffForHumans()}}</strong>
-                    </td>
-                    <td>
-                        <i class="fa fa-credit-card  fa-2x"></i>
-                        <i class="fa fa-truck fa-2x"></i>
-                    </td>
-                    <td>
-                        <button type="button"
-                                class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-button--colored mdl-js-ripple-effect">
-                            View
-                        </button>
-                    </td>
-                </tr>
+                            <strong>{{$order->created_at->diffForHumans()}}</strong>
+                        </td>
+                        <td>
+                            @if(\App\PaymentStatus::find($order->payment_type)->name == 'Cash On Delivery')
+                                <i class="fa fa-money fa-2x"></i> Cash On Delivery
+                            @else
+                                <i class="fa fa-credit-card  fa-2x"></i> Online Payment
+                            @endif
+                        </td>
+                        <td>
+                            <a href="{{route('review-order',[$order->id,$order->order_number])}}"
+                               class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-button--colored mdl-js-ripple-effect">
+                                View
+                            </a>
+                        </td>
+                    </tr>
                 @empty
                     <tr>
                         <td colspan="6">
@@ -61,8 +62,10 @@ Order History
                 @endforelse
                 </tbody>
             </table>
+            @if($orders)
 
-            {!! $orders->render() !!}
+                {!! $orders->appends(Request::get('q'))->render() !!}
+            @endif
+        </div>
     </div>
-</div>
 @endsection

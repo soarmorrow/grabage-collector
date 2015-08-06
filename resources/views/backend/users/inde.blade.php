@@ -86,7 +86,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="#" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i> </a>
+                                        <a href="{{route('view-user',$user->id)}}" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i> </a>
                                         <a href="{{route('edit-user',$user->id)}}" class="btn btn-xs btn-success"><i class="fa fa-edit"></i> </a>
                                         <a href="{{route('delete-user',$user->id)}}" class="btn btn-xs btn-danger {{($user->id == 1)?'disabled':''}}" {{($user->id == 1)?'disabled':''}}><i class="fa fa-trash"></i> </a>
                                     </td>

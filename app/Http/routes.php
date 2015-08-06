@@ -16,6 +16,7 @@
 Route::get('/', 'WelcomeController@index');
 
 Route::get('home', ['as'=>'home','uses'=>'HomeController@index']);
+Route::get('search', ['as'=>'search','uses'=>'HomeController@search']);
 
 Route::model('user','App\User');
 Route::model('order','App\Order');
@@ -45,12 +46,15 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin', 'middleware'=>['admin']], 
         Route::get('/', ['as'=>'users', 'uses'=>'UsersController@index']);
         Route::any('/add', ['uses'=>'UsersController@create']);
         Route::any('{user}/edit', ['as'=>'edit-user','uses'=>'UsersController@edit']);
+        Route::any('{user}/view', ['as'=>'view-user','uses'=>'UsersController@show']);
         Route::get('{user}/delete', ['as'=>'delete-user','uses'=>'UsersController@destroy']);
     });
     Route::group(['prefix'=>'orders'], function(){
         Route::get('/', ['as'=>'orders', 'uses'=>'OrderController@index']);
         Route::any('/add', ['uses'=>'OrderController@create']);
         Route::any('{order}/edit', ['as'=>'edit-order','uses'=>'OrderController@edit']);
+        Route::get('{order}/update', ['as'=>'update-order','uses'=>'OrderController@edit']);
+        Route::post('{order}/update', ['uses'=>'OrderController@update']);
         Route::any('{order}/view', ['as'=>'view-order','uses'=>'OrderController@show']);
         Route::get('{order}/delete', ['as'=>'delete-order','uses'=>'OrderController@destroy']);
     });
@@ -75,6 +79,8 @@ Route::group(['prefix' => 'order','namespace'=>'Orders'], function()
     Route::get('list', 'OrderController@index');
     Route::post('save',['as'=>'save-order','uses'=>'OrderController@store']);
     Route::get('confirm_order/{order}',['as'=>'confirm-order','uses'=>'OrderController@show']);
+    Route::get('confirm/{order}',['as'=>'cod-order','uses'=>'OrderController@create']);
+    Route::get('{order}/{order_number}', ['as'=>'review-order','uses'=>'OrderController@view']);
 
 });
 

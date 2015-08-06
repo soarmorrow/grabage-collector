@@ -78,9 +78,9 @@ class UsersController extends AdminController
      * @param  int $id
      * @return Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('backend.users.view')->withUser($user);
     }
 
     /**

@@ -23,6 +23,17 @@
                 </div>
                 <!-- /.col -->
             </div>
+
+            {{--Info--}}
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="callout callout-info">
+                        <h4><i class="glyphicon glyphicon-exclamation-sign"></i> Notice</h4><a href="#" style="text-decoration: none" class="btn btn-xs btn-success btn-flat pull-right"><i class="fa fa-save"></i> Update Order Status</a>
+                        <p>Order processing status :  <strong>{{\App\Status::lists('name','id')[$order->status]}}</strong>   </p>
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
             <!-- info row -->
             <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
@@ -39,8 +50,8 @@
                     <b>Invoice #{{$order->id}}</b><br/>
                     <br/>
                     <b>Order ID:</b> {{$order->order_number}}<br/>
-                    <b>Payment Status:</b> <label class="label label-success"> <i class="fa fa-money"></i>
-                        Paid</label><br/>
+                    <b>Status :</b> <label class="{{\Illuminate\Support\Facades\Config::get('status.'.$order->status)}}">{{\App\Status::lists('name','id')[$order->status]}}</label>
+                        <br/>
                     <b>Account:</b> {{\App\User::find($order->user_id)->first()->name}}
                 </div>
                 <!-- /.col -->
@@ -68,10 +79,12 @@
                             </td>
                             <td>{{get_option('rate')}}</td>
                             <td>
-                                <small class="label label-primary">Electronics</small>
-                                <small class="label label-primary">Kitchen</small>
-                                <small class="label label-primary">Garage</small>
-                                <small class="label label-primary">Food</small>
+                                @forelse($order->types()->get() as $type)
+                                    <label class="label label-primary">{{\App\GarbageType::find($type->type_id)->name}}</label>
+
+                                @empty
+                                    <code>N/A</code>
+                                @endforelse
                             </td>
                             <td>${{$order->amount}}</td>
                         </tr>
@@ -82,8 +95,10 @@
             </div>
             <!-- /.row -->
             @forelse($order->attachments()->get() as $photo)
-                <a href="{{asset($photo->source_path)}}" data-lightbox="{{$order->order_number}}" data-title="{{$order->map}}" >
-                    <img src="{{asset($photo->source_path)}}" class="img-responsive thumbnail pull-left" style="width: 20%; margin-right: 10px;" alt="{{$order->map}}"/>
+                <a href="{{asset($photo->source_path)}}" data-lightbox="{{$order->order_number}}"
+                   data-title="{{$order->map}}">
+                    <img src="{{asset($photo->source_path)}}" class="img-responsive thumbnail pull-left"
+                         style="width: 20%; margin-right: 10px;" alt="{{$order->map}}"/>
                 </a>
 
             @empty
@@ -99,20 +114,22 @@
                         </div>
                     </div>
                 </div>
-            @endforelse
-            <!-- /.row -->
+                @endforelse
+                        <!-- /.row -->
 
-            <!-- this row will not appear when printing -->
-            <div class="row no-print">
-                <div class="col-xs-12">
-                    <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i>
-                        Print</a>
-                    <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
-                    <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i>
-                        Generate PDF
-                    </button>
+                <!-- this row will not appear when printing -->
+                <div class="row no-print">
+                    <div class="col-xs-12">
+                        {{--<a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i>--}}
+                            {{--Print</a>--}}
+                        {{--<button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment--}}
+                        {{--</button>--}}
+                        {{--<button class="btn btn-primary pull-right" style="margin-right: 5px;"><i--}}
+                                    {{--class="fa fa-download"></i>--}}
+                            {{--Generate PDF--}}
+                        {{--</button>--}}
+                    </div>
                 </div>
-            </div>
         </section>
         <!-- /.content -->
     </section>

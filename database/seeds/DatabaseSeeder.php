@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
         $this->call('OptionTableSeeder');
         $this->command->info('Options table seeded successfully');
 
+        $this->call('PaymentStatusTableSeeder');
+        $this->command->info('Payment Status table seeded successfully');
+
         $this->call('RoleTableSeeder');
         $this->command->info('Role table seeded successfully');
 

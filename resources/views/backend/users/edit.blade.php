@@ -1,14 +1,14 @@
 @extends('backend.layouts.default')
 
 @section('title')
-    Add new User
+    User Management :: update {{$user->name}}'s profile
 @endsection
 
 @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Add a new staff or customer
+            Edit {{$user->name}}'s profile
             <small>Manage your staff and customer</small>
         </h1>
         <ol class="breadcrumb">

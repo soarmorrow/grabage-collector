@@ -26,7 +26,7 @@
                         Phone : {{$order->phone}}
                     </td>
                     <td>
-                        <code>{{$order->quantity}}</code> * <code>5</code> = <code>${{$order->amount}}</code>
+                        <code>{{$order->quantity}}</code> * <code>{{get_option('rate')}}</code> = <code>${{$order->amount}}</code>
                     </td>
                     <td>
 
@@ -42,12 +42,14 @@
             <br />
             <button type="submit"
                     class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect pull-right">
-                Pay Now
+                <i class="fa fa-credid-card"></i>
+                 Pay Now
             </button>
-            <button type="submit"
+            <a href="{{route('cod-order',$order->id)}}" style="margin-right: 10px"
                     class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect pull-right">
+                <i class="fa fa-money"></i>
                 Cash On Delivery
-            </button>
+            </a>
         </div>
     </div>
 @endsection

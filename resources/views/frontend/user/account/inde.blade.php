@@ -52,7 +52,7 @@
                         address
                     </th>
                     <td class="mdl-data-table__cell--non-numeric">
-                        {{nl2br($user->address)}}<br/>
+                        {!! nl2br($user->address) !!}<br/>
                         {{$user->city}},{{$user->state}} - {{$user->postcode}}
                     </td>
                 </tr>

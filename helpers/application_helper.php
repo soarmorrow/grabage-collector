@@ -60,7 +60,22 @@ if(!function_exists('set_option')){
 
 if(!function_exists('get_role')){
 
+    /**
+     * Get Role of a user
+     *
+     * @param $id
+     * @return mixed
+     */
     function get_role($id){
         return get_roles()[\App\User::find($id)->roles()->first()->role_id];
     }
 }
+
+if(!function_exists('get_all_status')){
+
+    function get_all_order_status(){
+        return  \App\Status::lists('name','id');
+    }
+}
+
+

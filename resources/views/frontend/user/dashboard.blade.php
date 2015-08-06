@@ -11,6 +11,8 @@
 @endsection
 
 @section('content')
+
+
     <div class="mdl-grid demo-content">
         <div class="demo-graphs mdl-shadow--2dp mdl-cell mdl-cell--12-col">
             {!! Form::open(['url'=>route('save-order'),"files"=>true]) !!}
@@ -129,17 +131,22 @@
                                 </div>
                                 <div class="mdl-cell mdl-cell--6-col">
                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-                                        <input required class="mdl-textfield__input" step="0.01" min="0" type="number" name="quantity"/>
+                                        <input required class="mdl-textfield__input" step="0.01" min="0" type="number"
+                                               name="quantity"/>
                                         <label class="mdl-textfield__label" for="quantity">How much does it
                                             weigh? (in Kg) </label>
                                     </div>
                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-                                        <input required class="mdl-textfield__input disabled" step="0.01" min="0" type="number" name="amount" value="0" readonly/>
+                                        <input required class="mdl-textfield__input disabled" step="0.01" min="0"
+                                               type="number" name="amount" value="0" readonly/>
                                         <label class="mdl-textfield__label" for="amount">Total Amount</label>
                                     </div>
 
                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-                                        {!! Form::select('types[]', \App\GarbageType::lists('name','id'),3, ['class'=>'mdl-textfield__input chosen-select','multiple'=>true,'data-placeholder'=>'Select Type']) !!}
+                                        {!! Form::select('types[]', \App\GarbageType::lists('name','id'),1,
+                                        ['class'=>'mdl-textfield__input
+                                        chosen-select','multiple'=>true,'required'=>'required','data-placeholder'=>'Select
+                                        Type']) !!}
                                         <label class="mdl-textfield__label" for="type">Garbage Type</label>
                                     </div>
 
@@ -157,7 +164,7 @@
                                     Pev Step
                                 </button>
                                 <button type="submit"
-                                class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect step3">
+                                        class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect step3">
                                     Proceed to Payment
                                 </button>
                             </div>
@@ -176,6 +183,7 @@
     <script src="{{asset('js/plugins/jquery.geocomplete.min.js')}}"></script>
     <script src="{{asset('js/plugins/jquery.maskedinput.min.js')}}"></script>
     <script src="{{asset('plugins/dropzone/dropzone.js')}}"></script>
+    <script src="{{asset('js/modal.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
     <script>
         var rate = {{get_option('rate')}};
@@ -189,29 +197,29 @@
                 },
                 maxFilesize: 2,
                 acceptedFiles: ".jpg,.png,.bmp,.gif,.jpeg,.tif",
-                success: function(response,xhr){
+                success: function (response, xhr) {
                     xhr = JSON.parse(xhr);
                     window.files[response.name] = xhr.file_path;
-                    if(xhr.code == 200){
-                        $hidden = '<input type="hidden" name="images[]" value="'+xhr.file_path+'" >';
+                    if (xhr.code == 200) {
+                        $hidden = '<input type="hidden" name="images[]" value="' + xhr.file_path + '" >';
                         $(".dz-upload-images").append($hidden);
                         toastr["success"]("Image added to upload list");
                     }
                 },
-                addRemoveLinks:true,
+                addRemoveLinks: true,
                 dictRemoveFile: "Remove Image",
-                removedfile: function(file) {
+                removedfile: function (file) {
                     var path = window.files[file.name];
                     $.ajax({
                         type: 'POST',
                         url: '{{route('image-delete')}}',
-                        data: "file_path="+path,
+                        data: "file_path=" + path,
                         dataType: 'json',
-                        success: function(data,xhr){
+                        success: function (data, xhr) {
                             window.files[file.name] = null;
                             toastr["error"]("Image removed from upload list");
-                            if(data.code == 200){
-                                $('input[value="'+path+'"]').remove();
+                            if (data.code == 200) {
+                                $('input[value="' + path + '"]').remove();
                             }
                         }
                     });
@@ -227,7 +235,7 @@
             $('.collapse-card').paperCollapse();
             $location = $(".location");
             $quantity = $(".quantity");
-          //  $checkout = $(".checkout");
+            //  $checkout = $(".checkout");
             $location.find('.collapse-card__title').trigger('click');
 
             $('.step1').on('click', function (evt) {
@@ -238,25 +246,25 @@
 //                openPaper($checkout)
 //            });
 
-            $('.step2_back').on('click', function(e){
+            $('.step2_back').on('click', function (e) {
                 openPaper($location);
             });
-            $('.step3_back').on('click', function(e){
+            $('.step3_back').on('click', function (e) {
                 openPaper($quantity);
             });
 
-            $(document).on('keyup',"input[name='quantity']", function(){
+            $(document).on('keyup', "input[name='quantity']", function () {
                 console.log($quantity.val());
-               $("input[name='amount']").val(Math.round((parseFloat($(this).val()) * rate)*100)/100);
+                $("input[name='amount']").val(Math.round((parseFloat($(this).val()) * rate) * 100) / 100);
             });
 
             $location.find('.collapse-card__title').on('click', function () {
                 closePaper($quantity);
-               // closePaper($checkout);
+                // closePaper($checkout);
             });
             $quantity.find('.collapse-card__title').on('click', function () {
                 closePaper($location);
-               // closePaper($checkout);
+                // closePaper($checkout);
             });
 //            $checkout.find('.collapse-card__title').on('click', function () {
 //                closePaper($quantity);
@@ -278,12 +286,12 @@
             $("select[name='types[]']").chosen({width: "inherit"});
 
             // set my address
-            $(document).on('click','.my_address', function(){
-                $("input[name='map']").val("{{Auth::user()->map}}");
+            $(document).on('click', '.my_address', function () {
+                $("input[name='map']").val("{!! Auth::user()->map !!}");
                 $("input[name='email']").val("{{Auth::user()->email}}");
                 $("input[name='first_name']").val("{{Auth::user()->first_name}}");
                 $("input[name='last_name']").val("{{Auth::user()->last_name}}");
-                $("input[name='address']").val("{{Auth::user()->address}}");
+                $("textarea[name='address']").val("{{ trim(preg_replace('/\s+/', ' ', Auth::user()->address)) }}");
                 $("input[name='city']").val("{{Auth::user()->city}}");
                 $("input[name='state']").val("{{Auth::user()->state}}");
                 $("input[name='postcode']").val("{{Auth::user()->postcode}}");

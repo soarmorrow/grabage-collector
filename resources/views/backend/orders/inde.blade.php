@@ -73,7 +73,7 @@
 
                                     </td>
                                     <td>
-                                        {{\App\User::find($order->user_id)->first()->email}}
+                                        {{\App\User::find($order->user_id)->email}}
                                     </td>
                                     <td>
                                         {{$order->phone}}
@@ -87,18 +87,15 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($order->status == 0)
-                                            <label class="label label-warning">pending</label>
-                                        @else
-
-                                            <label class="label label-success">completed</label>
-                                        @endif
+                                        <label class="{{\Illuminate\Support\Facades\Config::get('status.'.$order->status)}}">{{\App\Status::lists('name','id')[$order->status]}}</label>
 
                                     </td>
                                     <td>
                                         <a href="{{route('view-order',$order->id)}}" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i> </a>
                                         <a href="{{route('edit-order',$order->id)}}" class="btn btn-xs btn-success"><i
                                                     class="fa fa-edit"></i> </a>
+                                        <a href="{{route('edit-order',$order->id)}}" class="btn btn-xs btn-info"><i
+                                                    class="fa fa-refresh"></i> </a>
                                         <a href="{{route('delete-order',$order->id)}}" class="btn btn-xs btn-danger "><i
                                                     class="fa fa-trash"></i> </a>
                                     </td>

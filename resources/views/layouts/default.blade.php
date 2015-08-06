@@ -27,6 +27,9 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- OSX Style CSS files -->
+    {!! Html::style('css/bootstrap-label.css') !!}
     {!! Html::style('//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css') !!}
     {!! Html::style('https://storage.googleapis.com/code.getmdl.io/1.0.1/material.red-indigo.min.css') !!}
     {!! Html::style('css/bootstrap-alert.css') !!}
@@ -43,22 +46,77 @@
             margin-bottom: 40px;
             z-index: 900;
         }
+        body{
+            overflow-x: hidden;
+        }
+        .about-modal{
+            position: absolute !important;
+            width: 60%;
+            left: 22%;
+            top: 20%;
+            z-index: 9999;
+        }
     </style>
 </head>
 <body>
+<div class="overlay"></div>
+
+{{--About Modal--}}
+<div class="modal about-modal hide">
+    <section class="demo-graphs mdl-shadow--2dp collapse-card  mdl-cell mdl-cell--12-col">
+        <h3>{{get_option('about')['title']}}</h3>
+        <!-- Colored FAB button with ripple -->
+        <a class="pull-right modal-close mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+            <i class="material-icons">close</i>
+        </a>
+        <article>
+            {!! get_option('about')['content'] !!}
+        </article>
+    </section>
+</div>
+
+{{--Contact Modal--}}
+<div class="modal contact-modal hide">
+    <section class="demo-graphs mdl-shadow--2dp collapse-card  mdl-cell mdl-cell--12-col">
+        <h3>Get in touch !</h3>
+        <!-- Colored FAB button with ripple -->
+        <a class="pull-right modal-close mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+            <i class="material-icons">close</i>
+        </a>
+        <article>
+            {!! get_option('contact') !!}
+        </article>
+    </section>
+</div>
+
+
+{{--Privacy Modal--}}
+<div class="modal legal-modal hide">
+    <section class="demo-graphs mdl-shadow--2dp collapse-card  mdl-cell mdl-cell--12-col">
+        <h3>{{get_option('legal')['title']}}</h3>
+        <!-- Colored FAB button with ripple -->
+        <a class="pull-right modal-close mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+            <i class="material-icons">close</i>
+        </a>
+        <article>
+            {!! get_option('legal')['content'] !!}
+        </article>
+    </section>
+</div>
+
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 
     @include('layouts.header')
-
     @include('layouts.sidebar')
 
     <main class="mdl-layout__content mdl-color--grey-100">
-        @include('notifications')
+
         @yield('content')
     </main>
 </div>
 
 {!! Html::script('https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js') !!}
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js') !!}
 {!! Html::script('//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js') !!}
 {!! Html::script('js/material.min.js') !!}
 {!! Html::script('js/plugins/bootstrap-alert.js') !!}
@@ -86,6 +144,7 @@
         }
     });
 </script>
+@include('notifications')
 @yield('js')
 </body>
 </html>

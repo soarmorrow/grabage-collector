@@ -1,85 +1,58 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests;
 use App\Order;
 use Illuminate\Http\Request;
 
-class OrderController extends Controller {
+class OrderController extends Controller
+{
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		return view('backend.orders.inde')->withOrders(Order::paginate(5));
-	}
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        return view('backend.orders.inde')->withOrders(Order::paginate(5));
+    }
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
+    /**
+     * Display the specified resource.
+     *
+     * /**
+     * @param Order $order
+     * @return mixed
+     */
+    public function show(Order $order)
+    {
+        return view('backend.orders.show')->withOrder($order);
+    }
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Order $order
+     * @return mixed
+     */
+    public function edit(Order $order)
+    {
+        return view('backend.orders.edit')->withOrder($order);
+    }
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show(Order $order)
-	{
-		return view('backend.orders.show')->withOrder($order);
-	}
+    public function update(Order $order, Request $request)
+    {
+        $this->validate($request, [
+            'status' => 'required|numeric'
+        ]);
+        $order->status = $request->input('status');
+        if($order->save()){
+            return redirect(route('orders'))->with('success','Progress has been updated');
+        }else{
+            return redirect(route('orders'))->with('error','Progress status update failed');
+        }
+    }
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
 
 }

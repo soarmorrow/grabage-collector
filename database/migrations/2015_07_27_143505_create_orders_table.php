@@ -29,6 +29,7 @@ class CreateOrdersTable extends Migration {
             $table->float('amount',10);
             $table->string('transaction_id',60);
             $table->string('payment_type',60);
+            $table->integer('payment_status');
             $table->tinyInteger('status')->default(1);
 			$table->timestamps();
 
