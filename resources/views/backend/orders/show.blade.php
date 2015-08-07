@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="callout callout-info">
-                        <h4><i class="glyphicon glyphicon-exclamation-sign"></i> Notice</h4><a href="#" style="text-decoration: none" class="btn btn-xs btn-success btn-flat pull-right"><i class="fa fa-save"></i> Update Order Status</a>
+                        <h4><i class="glyphicon glyphicon-exclamation-sign"></i> Notice</h4><a href="{{route('update-order',$order->id)}}" style="text-decoration: none" class="btn btn-xs btn-success btn-flat pull-right"><i class="fa fa-save"></i> Update Order Status</a>
                         <p>Order processing status :  <strong>{{\App\Status::lists('name','id')[$order->status]}}</strong>   </p>
                     </div>
                 </div>
