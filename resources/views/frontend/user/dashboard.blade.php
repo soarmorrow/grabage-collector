@@ -12,9 +12,20 @@
 
 @section('content')
 
-
     <div class="mdl-grid demo-content">
         <div class="demo-graphs mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             {!! Form::open(['url'=>route('save-order'),"files"=>true]) !!}
             {{--Select location--}}
             <div class="collapse-card location">
@@ -46,13 +57,13 @@
                             <div class="mdl-grid">
                                 <div class="mdl-cell mdl-cell--6-col">
                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-                                        <input required class="mdl-textfield__input" type="text" name="first_name"/>
+                                        <input class="mdl-textfield__input" type="text" name="first_name"/>
                                         <label class="mdl-textfield__label" for="first_name">First Name</label>
                                     </div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--6-col">
                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-                                        <input required class="mdl-textfield__input" type="text" name="last_name"/>
+                                        <input class="mdl-textfield__input" type="text" name="last_name"/>
                                         <label class="mdl-textfield__label" for="last_name">Last Name</label>
                                     </div>
                                 </div>
@@ -90,7 +101,7 @@
                                 </div>
                                 <div class="mdl-cell mdl-cell--3-col">
                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-                                        <input required class="mdl-textfield__input" type="text" name="phone"/>
+                                        <input class="mdl-textfield__input" type="text" name="phone"/>
                                         <label class="mdl-textfield__label" for="phone">Mobile Number</label>
                                     </div>
                                 </div>
@@ -145,7 +156,7 @@
                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
                                         {!! Form::select('types[]', \App\GarbageType::lists('name','id'),1,
                                         ['class'=>'mdl-textfield__input
-                                        chosen-select','multiple'=>true,'required'=>'required','data-placeholder'=>'Select
+                                        chosen-select','multiple'=>true,'data-placeholder'=>'Select
                                         Type']) !!}
                                         <label class="mdl-textfield__label" for="type">Garbage Type</label>
                                     </div>
@@ -161,7 +172,7 @@
                             <div class="pull-right">
                                 <button type="button"
                                         class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect  step2_back">
-                                    Pev Step
+                                    Prev Step
                                 </button>
                                 <button type="submit"
                                         class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect step3">
@@ -183,11 +194,14 @@
     <script src="{{asset('js/plugins/jquery.geocomplete.min.js')}}"></script>
     <script src="{{asset('js/plugins/jquery.maskedinput.min.js')}}"></script>
     <script src="{{asset('plugins/dropzone/dropzone.js')}}"></script>
-    <script src="{{asset('js/modal.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
     <script>
         var rate = {{get_option('rate')}};
         $(function () {
+
+            $(".alert-danger").delay(5000).slideUp(function(){
+                $(this).remove();
+            });
 
             window.files = {};
             $("div#image").dropzone({

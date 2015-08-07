@@ -2,6 +2,7 @@
 
 use App\User;
 use App\UserRole;
+use Illuminate\Support\Facades\Mail;
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
 
@@ -42,6 +43,10 @@ class Registrar implements RegistrarContract {
         $role->user_id = $user->id;
         $role->role_id = 2;
         $role->save();
+        Mail::send('emails.register', compact('user'), function($message) use ($user){
+            $message->from(get_option('sent_from'), get_option('app'));
+            $message->to($user->email, $user->name)->subject(get_option('app').' Registration Successful');
+        });
         return $user;
 	}
 

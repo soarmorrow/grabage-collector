@@ -27,6 +27,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{asset('css/paper-collapse.css')}}"/>
 
     <!-- OSX Style CSS files -->
     {!! Html::style('css/bootstrap-label.css') !!}
@@ -56,9 +57,29 @@
             top: 20%;
             z-index: 9999;
         }
+        #preloader{
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            max-width: 100%;
+            background-color: #ffffff;
+            z-index: 999999;
+        }
+        #preloader > div{
+            position: absolute;
+            left: 50%;
+            top: 45%;
+        }
     </style>
 </head>
 <body>
+
+<div id="preloader">
+    <div class="mdl-spinner mdl-js-spinner is-active"></div>
+</div>
 <div class="overlay"></div>
 
 {{--About Modal--}}
@@ -118,9 +139,14 @@
 {!! Html::script('https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js') !!}
 {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js') !!}
 {!! Html::script('//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js') !!}
+{!! Html::script('js/modal.js') !!}
 {!! Html::script('js/material.min.js') !!}
 {!! Html::script('js/plugins/bootstrap-alert.js') !!}
 <script type="text/javascript">
+
+    $(window).load(function(){
+        $("#preloader").fadeOut();
+    });
     toastr.options = {
         "closeButton": true,
         "debug": false,

@@ -1,7 +1,7 @@
 
 <header class="demo-header mdl-layout__header mdl-color--white mdl-color--grey-100 mdl-color-text--grey-600">
     <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title">{{get_option('app')}}</span>
+        <span class="mdl-layout-title">GC</span>
         <div class="mdl-layout-spacer"></div>
         {!! Form::open(['url'=>route('search'),'method'=>'get']) !!}
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">

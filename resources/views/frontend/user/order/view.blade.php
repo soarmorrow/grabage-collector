@@ -1,3 +1,9 @@
+<style>
+    .mdl-cell{
+        max-width: 100%;
+        overflow-x: auto;
+    }
+</style>
 @extends('layouts.default')
 
 @section('title')

@@ -46,69 +46,72 @@
             <div class="col-md-12">
                 <div class="box box-success">
                     <div class="box-body">
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th style="width: 10px">#order Number</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Address</th>
-                                <th>status</th>
-                                <th style="width: 100px">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @forelse($orders as $k => $order)
-                                <tr>
-                                    <td>
-                                        {{$order->order_number}}
-                                    </td>
-                                    <td>
-                                        @if(!empty($order->first_name))
-                                            {{$order->first_name}} {{$order->last_name}}
-                                        @else
-                                            <code>N/A</code>
-                                        @endif
+                        <div class="table-responsive">
 
-                                    </td>
-                                    <td>
-                                        {{\App\User::find($order->user_id)->email}}
-                                    </td>
-                                    <td>
-                                        {{$order->phone}}
-                                    </td>
-                                    <td>
-                                        @if(!empty($order->address))
-                                            {{nl2br($order->address)}}<br/>
-                                            {{$order->city}}, {{$order->state}} - {{$order->postcode}}
-                                        @else
-                                            <code>N/A</code>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <label class="{{\Illuminate\Support\Facades\Config::get('status.'.$order->status)}}">{{\App\Status::lists('name','id')[$order->status]}}</label>
-
-                                    </td>
-                                    <td>
-                                        <a href="{{route('view-order',$order->id)}}" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i> </a>
-                                        <a href="{{route('edit-order',$order->id)}}" class="btn btn-xs btn-success"><i
-                                                    class="fa fa-edit"></i> </a>
-                                        <a href="{{route('edit-order',$order->id)}}" class="btn btn-xs btn-info"><i
-                                                    class="fa fa-refresh"></i> </a>
-                                        <a href="{{route('delete-order',$order->id)}}" class="btn btn-xs btn-danger "><i
-                                                    class="fa fa-trash"></i> </a>
-                                    </td>
-                                </tr>
-                            @empty
+                            <table class="table table-bordered">
+                                <thead>
                                 <tr>
-                                    <td colspan="7">
-                                        <p class="text-center">No Records found</p>
-                                    </td>
+                                    <th style="width: 10px">#order Number</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>status</th>
+                                    <th style="width: 100px">Actions</th>
                                 </tr>
-                            @endforelse
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                @forelse($orders as $k => $order)
+                                    <tr>
+                                        <td>
+                                            {{$order->order_number}}
+                                        </td>
+                                        <td>
+                                            @if(!empty($order->first_name))
+                                                {{$order->first_name}} {{$order->last_name}}
+                                            @else
+                                                <code>N/A</code>
+                                            @endif
+
+                                        </td>
+                                        <td>
+                                            {{\App\User::find($order->user_id)->email}}
+                                        </td>
+                                        <td>
+                                            {{$order->phone}}
+                                        </td>
+                                        <td>
+                                            @if(!empty($order->address))
+                                                {{nl2br($order->address)}}<br/>
+                                                {{$order->city}}, {{$order->state}} - {{$order->postcode}}
+                                            @else
+                                                <code>N/A</code>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <label class="{{\Illuminate\Support\Facades\Config::get('status.'.$order->status)}}">{{\App\Status::lists('name','id')[$order->status]}}</label>
+
+                                        </td>
+                                        <td>
+                                            <a href="{{route('view-order',$order->id)}}" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i> </a>
+                                            <a href="{{route('edit-order',$order->id)}}" class="btn btn-xs btn-success"><i
+                                                        class="fa fa-edit"></i> </a>
+                                            <a href="{{route('edit-order',$order->id)}}" class="btn btn-xs btn-info"><i
+                                                        class="fa fa-refresh"></i> </a>
+                                            <a href="{{route('delete-order',$order->id)}}" class="btn btn-xs btn-danger "><i
+                                                        class="fa fa-trash"></i> </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7">
+                                            <p class="text-center">No Records found</p>
+                                        </td>
+                                    </tr>
+                                @endforelse
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer clearfix">

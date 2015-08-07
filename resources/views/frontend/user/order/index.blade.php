@@ -4,6 +4,18 @@
     Order History
 @endsection
 
+@section('css')
+    <style>
+        td.mdl-data-table__cell--non-numeric{
+            padding-bottom: 10px;
+        }
+        .mdl-cell{
+            max-width:100%;
+            overflow-x: auto;
+        }
+    </style>
+@endsection
+
 
 @section('content')
     <div class="mdl-grid">

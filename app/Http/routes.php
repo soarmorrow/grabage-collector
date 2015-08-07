@@ -15,9 +15,16 @@
 
 Route::get('/', 'WelcomeController@index');
 
+Route::get('email', function(){
+   return view('emails.confirmation',['order'=>\App\Order::find(1)]);
+});
 Route::get('home', ['as'=>'home','uses'=>'HomeController@index']);
 Route::get('search', ['as'=>'search','uses'=>'HomeController@search']);
 
+
+/**
+ * Route model binding
+ */
 Route::model('user','App\User');
 Route::model('order','App\Order');
 Route::model('status','App\Status');

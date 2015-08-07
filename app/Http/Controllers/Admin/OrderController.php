@@ -3,7 +3,9 @@
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Order;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -48,6 +50,11 @@ class OrderController extends Controller
         ]);
         $order->status = $request->input('status');
         if($order->save()){
+            $user = User::find($order->user_id);
+            Mail::send('emails.confirmation', compact('order'), function($message) use ($user){
+                $message->from(get_option('sent_from'), get_option('app'));
+                $message->to($user->email, $user->name)->subject(get_option('app').' Progress Updated');
+            });
             return redirect(route('orders'))->with('success','Progress has been updated');
         }else{
             return redirect(route('orders'))->with('error','Progress status update failed');

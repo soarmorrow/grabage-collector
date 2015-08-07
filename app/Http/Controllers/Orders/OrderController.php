@@ -1,13 +1,14 @@
 <?php namespace App\Http\Controllers\Orders;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests;
+use App\Http\Requests\OrderRequest;
 use App\Order;
 use App\OrderAttachment;
 use App\OrderGarbageType;
 use App\PaymentStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
@@ -21,22 +22,24 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         if($request->has('q')){
-            return view('frontend.user.order.index')->withOrders(Auth::user()->orders()->search($request->input('q'))->paginate(5));
+            return view('frontend.user.order.index')->withOrders(Auth::user()->orders()->where('payment_type','!=', 0)->search($request->input('q'))->paginate(5));
         }
-        return view('frontend.user.order.index')->withOrders(Auth::user()->orders()->paginate(10));
+        return view('frontend.user.order.index')->withOrders(Auth::user()->orders()->where('payment_type','!=',0)->paginate(10));
     }
     /**
      * Store a newly created resource in storage.
      *
      * @return Response
      */
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
         $data = $request->except('_token','images','types');
         $data['user_id'] = (int)Auth::Id();
         $data['order_number'] = str_random(13) . time();
         $data['created_at'] = current_time();
         $data['phone'] = remove_symbols($data['phone']);
+        $data['payment_status'] = 0;
+        $data['payment_type'] = 0;
         $order = new Order;
         $order_id = $order->insertGetId($data);
         if($order_id){
@@ -87,6 +90,11 @@ class OrderController extends Controller
 
         $order->payment_type = PaymentStatus::where('name','Cash On Delivery')->first()->id;
         $order->save();
+
+        Mail::send('emails.confirmation', compact('order'), function($message){
+            $message->from(get_option('sent_from'), get_option('app'));
+            $message->to(Auth::user()->email, Auth::user()->name)->subject(get_option('app').' - Order Confirmation');
+        });
         return redirect(route('review-order', [$order->id, $order->order_number]))->with('success','Your Order Placed successfully');
     }
 

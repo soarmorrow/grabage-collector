@@ -1,7 +1,7 @@
 
 <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
     <header class="demo-drawer-header">
-        <img src="{{url('images/user.jpg')}}" class="demo-avatar">
+        <img src="{{url('backend/dist/img/user2-160x160.jpg')}}" class="demo-avatar">
         <div class="demo-avatar-dropdown">
             <span>{{Auth::user()->email}} ({{Auth::user()->phone}})</span>
             <div class="mdl-layout-spacer"></div>
