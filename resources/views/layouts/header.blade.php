@@ -21,6 +21,7 @@
             <li class="mdl-menu__item about">About</li>
             <li class="mdl-menu__item contact">Contact</li>
             <li class="mdl-menu__item legal">Legal information</li>
+            <li class="mdl-menu__item" onclick="location.href = '{{url('auth/logout')}}';">Logout</li>
         </ul>
     </div>
 </header>
