@@ -24,11 +24,13 @@
                     </div>
                 </div>
                 <div class="mdl-cell mdl-cell--6-col">
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo {{$errors->has('email')?'is-invalid':''}}">
                         <input class="mdl-textfield__input" type="email" value="{{!empty(Auth::user()->email)?Auth::user()->email:""}}" required name="email" id="email"
                                autocomplete="on"/>
                         <label class="mdl-textfield__label" for="email">Email Address</label>
                     </div>
+
+                    {!!$errors->has('email')?'<span style="color:#de3226">'.$errors->first('email').'</span>':''!!}
                 </div>
             </div>
 
@@ -79,10 +81,11 @@
                     </div>
                 </div>
                 <div class="mdl-cell mdl-cell--3-col">
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo  {{$errors->has('phone')?'is-invalid':''}}">
                         <input required class="mdl-textfield__input" type="text" value="{{!empty(Auth::user()->phone)?Auth::user()->phone:""}}" name="phone"/>
                         <label class="mdl-textfield__label" for="phone">Mobile Number</label>
                     </div>
+                    {!!$errors->has('phone')?'<span style="color:#de3226">'.$errors->first('phone').'</span>':''!!}
                 </div>
             </div>
 

@@ -53,7 +53,7 @@
                                 <tr>
                                     <td style="font:14px/1.4285714 Arial,sans-serif;padding:5px;border-bottom:1px solid #ccc;line-height:24px;color:#707070;">
                                     <span
-                                            style="padding:0 0 0 5px; color: rgba(186, 49, 0, 0.90)">N/A</span>
+                                            style="padding:0 0 0 5px; color: rgba(186, 49, 0, 0.90)">Incomplete</span>
 
 
                                     </td>
@@ -64,7 +64,7 @@
                                     </td>
                                     <td style="font:14px/1.4285714 Arial,sans-serif;padding:5px;border-bottom:1px solid #ccc;line-height:24px;color:#707070">
                                         <span
-                                                style="padding:0 0 0 5px; color: rgba(186, 49, 0, 0.90)">N/A</span>
+                                                style="padding:0 0 0 5px; color: rgba(186, 49, 0, 0.90)">Incomplete Address</span>
                                     </td>
                                     <td style="font:14px/1.4285714 Arial,sans-serif;padding:5px;border-bottom:1px solid #ccc;line-height:24px;color:#707070;">
                                         <div>
@@ -84,7 +84,7 @@
                                 <tr>
                                     <td colspan="2"
                                         style="font:14px/1.4285714 Arial,sans-serif;padding:10px 0 0;border-top:1px solid #cccccc;line-height:1">
-                                        Its Look like you haven't updated your profile update it from once you login to
+                                        Its Look like you haven't updated your profile. Please update it from your
                                         your <a href="{{route('account',$user->name)}}"
                                                 style="color:#3572b0;text-decoration:none" target="_blank"> account </a>
                                     </td>

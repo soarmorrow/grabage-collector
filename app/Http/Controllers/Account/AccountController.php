@@ -65,6 +65,10 @@ class AccountController extends Controller {
 	 */
 	public function update($username, Request $request)
 	{
+//        $this->validate($request,[
+//            'email' => 'required|email|unique:users',
+//            'phone' => 'required|unique:users',
+//        ]);
         $account_data = $request->except('_token');
         foreach($account_data as $k => $v){
             if($k == 'phone'){

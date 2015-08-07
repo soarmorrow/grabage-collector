@@ -256,3 +256,16 @@ html, body {
 .mdl-switch{
     width: 45%;
 }
+.fullwidth{
+    width: 100% !important;
+}
+.has-error, .has-error label{
+    color: #a94442 !important;
+}
+.has-error input{
+    border-color: #a94442 !important;
+}
+.has-error + span{
+    position: absolute;
+    bottom: 0;
+}

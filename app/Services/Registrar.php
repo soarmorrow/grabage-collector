@@ -19,7 +19,7 @@ class Registrar implements RegistrarContract {
 		return Validator::make($data, [
 			'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
-            'phone' => 'required|numeric|max:10|unique:users',
+            'phone' => 'required|numeric|unique:users',
 			'password' => 'required|confirmed|min:6',
 		]);
 	}
@@ -44,10 +44,12 @@ class Registrar implements RegistrarContract {
         $role->user_id = $user->id;
         $role->role_id = 2;
         $role->save();
+
         Mail::send('emails.register', compact('user'), function($message) use ($user){
             $message->from(get_option('sent_from'), get_option('app'));
             $message->to($user->email, $user->name)->subject(get_option('app').' Registration Successful');
         });
+
         return $user;
 	}
 

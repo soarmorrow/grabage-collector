@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -77,7 +78,6 @@ class AuthController extends Controller
                 $request, $validator
             );
         }
-
         $this->auth->login($this->registrar->create($request->all()));
 
         return redirect($this->redirectPath());
