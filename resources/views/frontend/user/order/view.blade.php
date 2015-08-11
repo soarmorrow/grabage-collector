@@ -87,14 +87,16 @@
                     @if($order->attachments()->count() > 0)
                         <h5>Attached Images</h5>
                     @endif
-                    @forelse($order->attachments()->get() as $photo)
-                        <a href="{{asset($photo->source_path)}}" data-lightbox="{{$order->order_number}}"
-                           data-title="{{$order->map}}">
-                            <img src="{{asset($photo->source_path)}}" class="img-responsive thumbnail pull-left"
-                                 style="width: 20%; margin-right: 10px;" alt="{{$order->map}}"/>
-                        </a>
-
-                    @empty
+                    <div class="grid1">
+                        @forelse($order->attachments()->get() as $photo)
+                        <div class="grid-item1">
+                            <a href="{{asset($photo->source_path)}}" data-lightbox="{{$order->order_number}}"
+                               data-title="{{$order->map}}">
+                                <img src="{{asset($photo->source_path)}}" class="img-responsive thumbnail pull-left"
+                                     alt="{{$order->map}}"/>
+                            </a>
+                        </div>
+                        @empty
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-12">
@@ -105,7 +107,8 @@
                                 </div>
                             </div>
                         </div>
-                    @endforelse
+                        @endforelse
+                    </div>
                 </div>
             </div>
         </div>

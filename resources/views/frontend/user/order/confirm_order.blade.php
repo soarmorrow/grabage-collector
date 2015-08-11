@@ -28,13 +28,16 @@
                     <td>
                         <code>{{$order->quantity}}</code> * <code>{{get_option('rate')}}</code> = <code>${{$order->amount}}</code>
                     </td>
-                    <td>
-
+                    <td width="300px">
+                        <div class="grid">
                         @forelse($order->attachments()->get() as $photo)
-                            <img src="{{asset($photo->source_path)}}" alt="{{$order->city}}" style="display: inline-block;float: left;padding: 2px;width: 30%" />
+                        <div class="grid-item">
+                            <img src="{{asset($photo->source_path)}}" alt="{{$order->city}}" style="width: 100%" />
+                        </div>
                         @empty
                             No images available
                         @endforelse
+                    </div>
                     </td>
                 </tr>
                 </tbody>

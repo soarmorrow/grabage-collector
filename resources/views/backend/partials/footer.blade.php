@@ -28,10 +28,23 @@
 <script src="{{asset('backend/plugins/slimScroll/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
 <!-- ChartJS 1.0.1 -->
 <script src="{{asset('backend/plugins/chartjs/Chart.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('backend/masonry/js/masonry.pkgd.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('backend/masonry/js/imagesloaded.pkgd.min.js')}}" type="text/javascript"></script>
+
 
 {!! Html::script('//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js') !!}
 
 <script type="text/javascript">
+    $('.grid1').imagesLoaded( function(){
+      $('.grid1').masonry({
+              // options
+              itemSelector: '.grid-item1',
+              isAnimated: true,
+              isFitWidth: true,
+              columnWidth: '.grid-item1',
+              gutter: 10
+          });
+    });
     toastr.options = {
         "closeButton": true,
         "debug": false,

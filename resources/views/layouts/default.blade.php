@@ -142,8 +142,30 @@
 {!! Html::script('js/modal.js') !!}
 {!! Html::script('js/material.min.js') !!}
 {!! Html::script('js/plugins/bootstrap-alert.js') !!}
+{!! Html::script('js/plugins/masonry.pkgd.min.js') !!}
+{!! Html::script('js/plugins/imagesloaded.pkgd.min.js') !!}
 <script type="text/javascript">
-
+    
+    $('.grid').imagesLoaded( function(){
+      $('.grid').masonry({
+              // options
+              itemSelector: '.grid-item',
+              isAnimated: true,
+              isFitWidth: true,
+              columnWidth: '.grid-item',
+              gutter: 10
+          });
+    });
+    $('.grid1').imagesLoaded( function(){
+      $('.grid1').masonry({
+              // options
+              itemSelector: '.grid-item1',
+              isAnimated: true,
+              isFitWidth: true,
+              columnWidth: '.grid-item1',
+              gutter: 10
+          });
+    });
     $(window).load(function(){
         $("#preloader").fadeOut();
     });
