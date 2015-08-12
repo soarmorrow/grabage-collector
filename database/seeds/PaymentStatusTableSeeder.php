@@ -16,6 +16,12 @@ class PaymentStatusTableSeeder extends \Illuminate\Database\Seeder {
     {
         $payment_statuses = [
             [
+                'name'=>'Not Confirmed',
+                'label'=>'danger',
+                'created_at' => current_time(),
+                'updated_at'=>current_time()
+            ],
+            [
                 'name'=>'Paid',
                 'label'=>'success',
                 'created_at' => current_time(),
@@ -42,18 +48,6 @@ class PaymentStatusTableSeeder extends \Illuminate\Database\Seeder {
             [
                 'name'=>'Transaction Failed',
                 'label'=>'danger',
-                'created_at' => current_time(),
-                'updated_at'=>current_time()
-            ],
-            [
-                'name'=>'Payment Pending',
-                'label'=>'warning',
-                'created_at' => current_time(),
-                'updated_at'=>current_time()
-            ],
-            [
-                'name'=>'Cash On Delivery',
-                'label'=>'info',
                 'created_at' => current_time(),
                 'updated_at'=>current_time()
             ]

@@ -34,7 +34,7 @@ Route::model('type','App\Type   ');
  * Admin routes
  */
 
-Route::group(['prefix'=>'admin','namespace'=>'Admin', 'middleware'=>['admin']], function(){
+Route::group(['prefix'=>'admin','namespace'=>'Admin', 'middleware'=>['auth','admin']], function(){
 
     Route::get('/', ['as'=>'dashboard', 'uses'=>'DashboardController@index']);
     Route::resource('settings', 'SettingsController', ['only' => ['index', 'store'], 'names' => ['index'=>'settings','store'=>'settings.store']]);
@@ -80,13 +80,14 @@ Route::group(['prefix'=>'image'], function(){
  * Order routes with route-Order model binding
  */
 
-Route::group(['prefix' => 'order','namespace'=>'Orders'], function()
+Route::group(['prefix' => 'order','namespace'=>'Orders','middleware'=>['auth']], function()
 {
     // Controllers Within The "App\Http\Controllers\Orders" Namespace
     Route::get('list', 'OrderController@index');
     Route::post('save',['as'=>'save-order','uses'=>'OrderController@store']);
     Route::get('confirm_order/{order}',['as'=>'confirm-order','uses'=>'OrderController@show']);
     Route::get('confirm/{order}',['as'=>'cod-order','uses'=>'OrderController@create']);
+    Route::get('{order}/delete',['as'=>'delete-order','uses'=>'OrderController@delete']);
     Route::get('{order}/{order_number}', ['as'=>'review-order','uses'=>'OrderController@view']);
 
 });

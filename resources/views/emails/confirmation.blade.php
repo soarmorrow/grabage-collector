@@ -99,11 +99,8 @@
                                         <div>
                                                                                <span
                                                                                        style="padding:0 0 0 5px;">
-                                                                                   @if(\App\PaymentStatus::find($order->payment_type)->name == 'Cash On Delivery')
-                                                                                       <i class="fa fa-money fa-2x"></i> Cash On Delivery
-                                                                                   @else
-                                                                                       <i class="fa fa-credit-card  fa-2x"></i> Online Payment
-                                                                                   @endif</span>
+                                                                               {{\App\PaymentType::find($order->payment_type)->name}}
+                                                                               </span>
                                         </div>
                                     </td>
                                     <td style="font:14px/1.4285714 Arial,sans-serif;padding:5px;border-bottom:1px solid #ccc;line-height:24px;color:#707070;">

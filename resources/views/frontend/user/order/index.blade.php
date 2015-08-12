@@ -6,11 +6,12 @@
 
 @section('css')
     <style>
-        td.mdl-data-table__cell--non-numeric{
+        td.mdl-data-table__cell--non-numeric {
             padding-bottom: 10px;
         }
-        .mdl-cell{
-            max-width:100%;
+
+        .mdl-cell {
+            max-width: 100%;
             overflow-x: auto;
         }
     </style>
@@ -52,17 +53,19 @@
                             <strong>{{$order->created_at->diffForHumans()}}</strong>
                         </td>
                         <td>
-                            @if(\App\PaymentStatus::find($order->payment_type)->name == 'Cash On Delivery')
-                                <i class="fa fa-money fa-2x"></i> Cash On Delivery
-                            @else
-                                <i class="fa fa-credit-card  fa-2x"></i> Online Payment
-                            @endif
+                            {{\App\PaymentType::find($order->payment_type)->name}}
                         </td>
                         <td>
                             <a href="{{route('review-order',[$order->id,$order->order_number])}}"
-                               class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-button--colored mdl-js-ripple-effect">
-                                View
+                               class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--colored mdl-js-ripple-effect">
+                                <i class="fa fa-eye"></i>
                             </a>
+                            @if($order->payment_type == 2)
+                                <a href="{{route('delete-order',[$order->id])}}"
+                                   class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-button--colored mdl-js-ripple-effect">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            @endif
                         </td>
                     </tr>
                 @empty

@@ -2,7 +2,7 @@
 
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-        <b>Version</b> 2.2.0
+        <b>&nbsp;</b>
     </div>
     <strong>Copyright &copy; {{date('Y')}} <a href="{{url('/')}}">{{get_option('app')?get_option('app'):'Garbage Collector'}}</a>.</strong> All rights
     reserved.

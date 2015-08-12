@@ -73,9 +73,38 @@ if(!function_exists('get_role')){
 
 if(!function_exists('get_all_status')){
 
+    /**
+     * Get all order status as an array
+     * @return mixed
+     */
     function get_all_order_status(){
         return  \App\Status::lists('name','id');
     }
 }
 
 
+if(!function_exists('send_message')){
+    /**
+     * Send message to the specified number (or numbers separated by comma)
+     *
+     * @param $contact
+     * @param $message
+     * @return string
+     */
+    function send_message($contact, $message){
+        $api_key = \Illuminate\Support\Facades\Config::get('sms.api_key');
+
+        $from = \Illuminate\Support\Facades\Config::get('sms.sender_id');
+
+        $sms_text = urlencode($message);
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL, \Illuminate\Support\Facades\Config::get('sms.url'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "key=".$api_key."&campaign=0&routeid=3&type=text&contacts=".$contact."&senderid=".$from."&msg=".$sms_text);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        return json_encode(['status' => $response]);
+    }
+}

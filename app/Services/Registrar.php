@@ -45,6 +45,15 @@ class Registrar implements RegistrarContract {
         $role->role_id = 2;
         $role->save();
 
+        /**
+         * Send a welcome message
+         */
+        $message = "Hi ".$data['name'].". Your account has been activated. Have a good day";
+        send_message($data['phone'], $message);
+
+        /**
+         * Send email for account creation
+         */
         Mail::send('emails.register', compact('user'), function($message) use ($user){
             $message->from(get_option('sent_from'), get_option('app'));
             $message->to($user->email, $user->name)->subject(get_option('app').' Registration Successful');

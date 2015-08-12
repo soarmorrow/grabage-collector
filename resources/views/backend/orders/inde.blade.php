@@ -51,11 +51,12 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th style="width: 10px">#order Number</th>
+                                    <th style="width: 10px">#ID</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Address</th>
+                                    <th>Payment Type</th>
                                     <th>status</th>
                                     <th style="width: 100px">Actions</th>
                                 </tr>
@@ -64,7 +65,7 @@
                                 @forelse($orders as $k => $order)
                                     <tr>
                                         <td>
-                                            {{$order->order_number}}
+                                            {{$order->id}}
                                         </td>
                                         <td>
                                             @if(!empty($order->first_name))
@@ -88,18 +89,26 @@
                                                 <code>N/A</code>
                                             @endif
                                         </td>
-                                        <td>
-                                            <label class="{{\Illuminate\Support\Facades\Config::get('status.'.$order->status)}}">{{\App\Status::lists('name','id')[$order->status]}}</label>
 
+                                        <td>
+                                            {{ \App\PaymentType::find($order->payment_type)->name }}
                                         </td>
                                         <td>
-                                            <a href="{{route('view-order',$order->id)}}" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i> </a>
+                                            <label class="{{\Illuminate\Support\Facades\Config::get('status.'.$order->status)}}">{{\App\Status::lists('name','id')[$order->status]}}</label>
+                                        </td>
+                                        <td>
+                                            <a href="{{route('view-order',$order->id)}}" class="btn btn-xs btn-primary"><i
+                                                        class="fa fa-eye"></i> </a>
                                             <a href="{{route('edit-order',$order->id)}}" class="btn btn-xs btn-success"><i
                                                         class="fa fa-edit"></i> </a>
                                             <a href="{{route('edit-order',$order->id)}}" class="btn btn-xs btn-info"><i
                                                         class="fa fa-refresh"></i> </a>
-                                            <a href="{{route('delete-order',$order->id)}}" class="btn btn-xs btn-danger "><i
-                                                        class="fa fa-trash"></i> </a>
+                                            @if($order->payment_type == 2)
+                                                <a href="{{route('delete-order',$order->id)}}"
+                                                   class="btn btn-xs btn-danger disabled"><i
+                                                            class="fa fa-trash"></i> </a>
+                                            @endif
+
                                         </td>
                                     </tr>
                                 @empty

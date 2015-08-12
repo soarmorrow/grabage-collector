@@ -113,7 +113,7 @@ class HomeController extends Controller
 //        DB::connection()->enableQueryLog();
 //        Auth::user()->orders()->search($request->input('q'))->get()->toArray();
 //        dd(DB::getQueryLog());
-        return view('frontend.user.order.index')->withOrders(Auth::user()->orders()->search($request->input('q'))->paginate(5));
+        return view('frontend.user.order.index')->withOrders(Auth::user()->orders()->search($request->input('q'))->orderBy('created_at','desc')->paginate(5));
     }
 
 

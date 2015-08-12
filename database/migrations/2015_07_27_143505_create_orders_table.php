@@ -28,9 +28,9 @@ class CreateOrdersTable extends Migration {
             $table->float('quantity');
             $table->float('amount',10);
             $table->string('transaction_id',60);
-            $table->string('payment_type',60);
-            $table->integer('payment_status');
-            $table->tinyInteger('status')->default(1);
+            $table->string('payment_type',60); // 0 not confirmed , 1 - COD , 2 - Online Payment
+            $table->integer('payment_status'); // Status of payment like success , failed, rejected etc
+            $table->tinyInteger('status')->default(1); // Process Status
 			$table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

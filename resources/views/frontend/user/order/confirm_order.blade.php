@@ -31,7 +31,7 @@
                     <td>
 
                         @forelse($order->attachments()->get() as $photo)
-                            <img src="{{asset($photo->source_path)}}" alt="{{$order->city}}" style="display: inline-block;float: left;padding: 2px;width: 30%" />
+                            <img src="{{asset($photo->source_path)}}" alt="{{$order->city}}" style="display: inline-block;float: left;padding: 2px;width: 30%;height: 100px;" />
                         @empty
                             No images available
                         @endforelse

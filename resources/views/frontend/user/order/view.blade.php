@@ -1,9 +1,3 @@
-<style>
-    .mdl-cell{
-        max-width: 100%;
-        overflow-x: auto;
-    }
-</style>
 @extends('layouts.default')
 
 @section('title')
@@ -45,10 +39,10 @@
                 </div>
             </div>
             <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--12-col">
-                    <div class="alert alert-info">
-                        <strong>Your Order Status :<i>{{\App\Status::lists('name','id')[$order->status]}}</i></strong>
-                    </div>
+                <div class="alert alert-info" style="width: 100%;">
+                    <strong>Your Order Status :<i>{{\App\Status::lists('name','id')[$order->status]}}</i></strong>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col" style="max-width:100%;overflow-x: auto;">
                     <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                         <thead>
                         <tr>
@@ -71,11 +65,7 @@
                                 <code>${{$order->amount}}</code>
                             </td>
                             <td>
-                                @if(\App\PaymentStatus::find($order->payment_type)->name == 'Cash On Delivery')
-                                    <i class="fa fa-money fa-2x"></i> Cash On Delivery
-                                @else
-                                    <i class="fa fa-credit-card  fa-2x"></i> Online Payment
-                                @endif
+                                {{\App\PaymentType::find($order->payment_type)->name}}
                             </td>
                         </tr>
                         </tbody>
@@ -88,11 +78,15 @@
                         <h5>Attached Images</h5>
                     @endif
                     @forelse($order->attachments()->get() as $photo)
-                        <a href="{{asset($photo->source_path)}}" data-lightbox="{{$order->order_number}}"
-                           data-title="{{$order->map}}">
-                            <img src="{{asset($photo->source_path)}}" class="img-responsive thumbnail pull-left"
-                                 style="width: 20%; margin-right: 10px;" alt="{{$order->map}}"/>
-                        </a>
+                            <div class="masonry">
+                                <div class="item">
+                                    <a href="{{asset($photo->source_path)}}" data-lightbox="{{$order->order_number}}"
+                                    data-title="{{$order->map}}">
+                                        <img src="{{asset($photo->source_path)}}" class="img-responsive thumbnail pull-left"
+                                        style="width: 20%; margin-right: 10px;height: 120px;" alt="{{$order->map}}"/>
+                                    </a>
+                                </div>
+                            </div>
 
                     @empty
                         <div class="row">

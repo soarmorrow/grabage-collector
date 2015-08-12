@@ -6,6 +6,7 @@ use App\Order;
 use App\OrderAttachment;
 use App\OrderGarbageType;
 use App\PaymentStatus;
+use App\PaymentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -22,9 +23,9 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         if($request->has('q')){
-            return view('frontend.user.order.index')->withOrders(Auth::user()->orders()->where('payment_type','!=', 0)->search($request->input('q'))->paginate(5));
+            return view('frontend.user.order.index')->withOrders(Auth::user()->orders()->where('payment_type','!=', 1)->search($request->input('q'))->orderBy('created_at','desc')->paginate(5));
         }
-        return view('frontend.user.order.index')->withOrders(Auth::user()->orders()->where('payment_type','!=',0)->paginate(10));
+        return view('frontend.user.order.index')->withOrders(Auth::user()->orders()->where('payment_type','!=',1)->orderBy('created_at','desc')->paginate(10));
     }
     /**
      * Store a newly created resource in storage.
@@ -35,10 +36,10 @@ class OrderController extends Controller
     {
         $data = $request->except('_token','images','types');
         $data['user_id'] = (int)Auth::Id();
-        $data['order_number'] = str_random(13) . time();
+        $data['order_number'] = str_random(8);
         $data['created_at'] = current_time();
         $data['phone'] = remove_symbols($data['phone']);
-        $data['payment_status'] = 0;
+        $data['payment_status'] = 1;
         $data['payment_type'] = 0;
         $order = new Order;
         $order_id = $order->insertGetId($data);
@@ -75,7 +76,7 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         if(Session::get('confirm_order') != true){
-            abort(401, 'Unauthorized access');
+            abort(500, 'Unauthorized access');
         }
         session(['checkout'=>true]);
         return view('frontend.user.order.confirm_order')->withOrder($order);
@@ -88,9 +89,20 @@ class OrderController extends Controller
             abort(500, "Unauthorized Access");
         }
 
-        $order->payment_type = PaymentStatus::where('name','Cash On Delivery')->first()->id;
+        $order->payment_type = PaymentType::where('name','COD')->first()->id;
         $order->save();
 
+
+        /**
+         * Send a COD success message
+         */
+        $message = "Hello ".$order->first_name.", Your order #".$order->id." has been confirmed for Cash On Delivery. (REF : ".$order->order_number.")";
+        send_message($order->phone, $message);
+
+
+        /**
+         * Send Order confirmation
+         */
         Mail::send('emails.confirmation', compact('order'), function($message){
             $message->from(get_option('sent_from'), get_option('app'));
             $message->to(Auth::user()->email, Auth::user()->name)->subject(get_option('app').' - Order Confirmation');
@@ -100,5 +112,13 @@ class OrderController extends Controller
 
     public function view(Order $order, $order_number = null){
         return view('frontend.user.order.view')->with('order', $order);
+    }
+
+    public function delete(Order $order)
+    {
+        if($order->user_id != Auth::Id())
+            return redirect(url('order/list'))->with('error','You can\'t delete others Order');
+        $order->delete();
+        return redirect(url('order/list'))->with('success','Order deleted');
     }
 }
