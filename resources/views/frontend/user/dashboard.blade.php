@@ -199,12 +199,25 @@
         var rate = {{get_option('rate')}};
         $(function () {
 
-            $(".alert-danger").delay(5000).slideUp(function(){
+            $(".alert-danger").delay(5000).slideUp(function () {
                 $(this).remove();
             });
 
             window.files = {};
             $("div#image").dropzone({
+                init: function () {
+                    this.on("complete", function (file) {
+                        var confirm_order = $(".step3");
+                        if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+
+                                confirm_order.attr('disabled',false);
+                                console.log('enabled');
+                        }else{
+                            confirm_order.attr('disabled',true);
+                            console.log('disabled');
+                        }
+                    });
+                },
                 url: "{{route('image-upload')}}",
                 headers: {
                     'X-CSRF-Token': "{{csrf_token()}}"
