@@ -18,8 +18,10 @@ class OrderController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if($request->has('q'))
+            return view('backend.orders.inde')->withOrders(Order::search($request->input('q'))->orderBy('created_at','desc')->paginate(5));
         return view('backend.orders.inde')->withOrders(Order::orderBy('created_at','desc')->paginate(5));
     }
 
