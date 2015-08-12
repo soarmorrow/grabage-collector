@@ -89,7 +89,7 @@ class OrderController extends Controller
             abort(500, "Unauthorized Access");
         }
 
-        $order->payment_type = PaymentType::where('name','COD')->first()->id;
+        $order->payment_type = PaymentType::where('name','Cash On Delivery')->first()->id;
         $order->save();
 
 
