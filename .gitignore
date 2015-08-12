@@ -4,6 +4,7 @@
 /.idea
 config/database.php
 config/mail.php
+storage/
 .env.example
 public/uploads
 public/CCAVenueWorldIntegrationManual.pdf
