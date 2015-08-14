@@ -4,7 +4,6 @@ use App\GarbageType;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Status;
 use Illuminate\Http\Request;
 
 class TypesController extends Controller {
@@ -32,8 +31,8 @@ class TypesController extends Controller {
             'name' => 'required|min:3'
         ]);
 
-        if(Status::create($request->except('_token'))){
-            return redirect()->back()->withSuccess('Status added');
+        if(GarbageType::create($request->except('_token'))){
+            return redirect()->back()->withSuccess('Garbage Type added');
         }else{
             return redirect()->back()->withSError('Failed to add new status');
         }
