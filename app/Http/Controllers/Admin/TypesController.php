@@ -4,6 +4,7 @@ use App\GarbageType;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Status;
 use Illuminate\Http\Request;
 
 class TypesController extends Controller {
