@@ -64,6 +64,13 @@ class OptionTableSeeder extends \Illuminate\Database\Seeder{
                 'value'=>'Contact para',
                 'created_at'=>current_time(),
                 'updated_at'=>current_time()
+            ],
+            [
+                'name' => 'currency_symbol',
+                'value' => '₹',
+                'created_at'=>current_time(),
+                'updated_at'=>current_time()
+
             ]
         ];
 

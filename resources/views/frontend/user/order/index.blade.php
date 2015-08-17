@@ -43,7 +43,7 @@
                         </td>
                         <td>
                             <code>{{$order->quantity}}</code> * <code>{{get_option('rate')}}</code> =
-                            <code>${{$order->amount}}</code>
+                            <code>{{get_option('currency_symbol')}}{{$order->amount}}</code>
                         </td>
                         <td>
                             <label class="{{\Illuminate\Support\Facades\Config::get('status.'.$order->status)}}">{{\App\Status::lists('name','id')[$order->status]}}</label>

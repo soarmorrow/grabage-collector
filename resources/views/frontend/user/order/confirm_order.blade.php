@@ -26,7 +26,7 @@
                         Phone : {{$order->phone}}
                     </td>
                     <td>
-                        <code>{{$order->quantity}}</code> * <code>{{get_option('rate')}}</code> = <code>${{$order->amount}}</code>
+                        <code>{{$order->quantity}}</code> * <code>{{get_option('rate')}}</code> = <code>{{get_option('currency_symbol')}}{{$order->amount}}</code>
                     </td>
                     <td width="300px">
                         <div class="grid">

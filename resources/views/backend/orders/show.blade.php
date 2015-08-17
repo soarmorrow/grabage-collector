@@ -86,7 +86,7 @@
                                     <code>N/A</code>
                                 @endforelse
                             </td>
-                            <td>${{$order->amount}}</td>
+                            <td>{{get_option('currency_symbol')}}{{$order->amount}}</td>
                         </tr>
                         </tbody>
                     </table>

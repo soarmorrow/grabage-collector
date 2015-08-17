@@ -92,7 +92,7 @@
                                         <span
                                                 style="padding:0 0 0 5px; color: rgba(186, 49, 0, 0.90)">
                                             <code>{{$order->quantity}}</code> * <code>{{get_option('rate')}}</code> =
-                            <code>${{$order->amount}}</code>
+                            <code>{{get_option('currency_symbol')}}{{$order->amount}}</code>
                                         </span>
                                     </td>
                                     <td style="font:14px/1.4285714 Arial,sans-serif;padding:5px;border-bottom:1px solid #ccc;line-height:24px;color:#707070;">

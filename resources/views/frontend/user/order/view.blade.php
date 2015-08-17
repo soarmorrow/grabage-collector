@@ -62,7 +62,7 @@
                             </td>
                             <td>
                                 <code>{{$order->quantity}}</code> * <code>{{get_option('rate')}}</code> =
-                                <code>${{$order->amount}}</code>
+                                <code>{{get_option('currency_symbol')}}{{$order->amount}}</code>
                             </td>
                             <td>
                                 {{\App\PaymentType::find($order->payment_type)->name}}
